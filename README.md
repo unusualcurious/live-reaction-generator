@@ -20,3 +20,6 @@ python live_reaction.py
 ```py
 python3 live_reaction.py
 ```
+
+### Sample image
+![output](https://user-images.githubusercontent.com/41525622/184519270-9ac4dbb7-4d25-419b-a4cb-ef452e255ecc.png)
