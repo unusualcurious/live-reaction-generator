@@ -2,7 +2,6 @@ from PIL import Image
 from sys import exit
 from os.path import exists
 
-
 # Try to return an image, exit if a valid file is not found
 def try_open(path):
     extensions = [".bmp", ".png", ".jpg", ".jfif", ".jpg_large", ".jpe", ".jif", ".jfi"]
@@ -12,14 +11,16 @@ def try_open(path):
         for i in range(len(extensions)):
             if exists(path + extensions[i]):
                 return Image.open(path + extensions[i])
-            else:
-                # Try opening an image without an extension
-                if exists(path):
-                    return Image.open(path)
-    except OSError:
-        print(f"Cannot open \"{path}\". Does the file exist?")
-        exit(1)
+        
+        # Look for a file without an extension
+        if exists(path):
+            return Image.open(path)
 
+        exit(f"Cannot open \"{path}\". Does the file exist?")
+
+    except OSError:
+        exit(f"Invalid file at \"{path}\". Make sure it's an image!")
+        
 
 def main():
     # Set the dimensions (width/height) and position of the images
@@ -29,7 +30,7 @@ def main():
     title_position = (150, 22)
     
     # Open images for processing
-    base = Image.open("images/base.png")
+    base = try_open("images/base.png")
     main_image = try_open("images/input")
     title_image = try_open("images/input")
 
